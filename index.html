@@ -1,0 +1,252 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>HERE XYZ Studio: tourist map</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="here-xyz-studio-tourist-map"
+                  title="HERE XYZ Studio: tourist map"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <h2 is-upgraded><strong>Introduction</strong></h2>
+<p>This training was prepared to show functionalities of the HERE XYZ Studio. HERE XYZ Studio is an interactive, visual, web-based application for accessing XYZ Hub data and creating maps within minutes. This tutorial doesn&#39;t require coding skills.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\b87c70bee48c4acb.png"></p>
+<h2 is-upgraded><strong>Training objectives</strong></h2>
+<p>In this tutorial, you&#39;re going to build a tourist map for Central European countries: Baltics, Poland, Czech Republic, Slovakia and Hungary. This map will:</p>
+<ul>
+<li>Display borders of each country</li>
+<li>Display collections from wego.here.com</li>
+<li>Allow you to draw and display new places on a map</li>
+<li>Allow you to style your layers any way you want it</li>
+<li>Create and display bookmarks</li>
+</ul>
+<aside class="special"><p><strong>Useful materials:</strong></p>
+<ul>
+<li><a href="https://www.here.xyz/studio/" target="_blank">https://www.here.xyz/studio/</a></li>
+<li><a href="https://www.here.xyz/cli/" target="_blank">https://www.here.xyz/cli/</a></li>
+<li><a href="https://wego.here.com/" target="_blank">https://wego.here.com/</a></li>
+</ul>
+</aside>
+<h2 class="checklist" is-upgraded><strong>What you&#39;ll learn</strong></h2>
+<ul class="checklist">
+<li>How to create an account in XYZ Studio</li>
+<li>How to install HERE Data Hub CLI</li>
+<li>How to add larger spatial data to a project using Data Hub CLI</li>
+<li>How to add collections from wego.here.com to the HERE XYZ Studio</li>
+<li>How to display data on a map</li>
+<li>How to publish your map</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Getting set up" duration="0">
+        <h2 is-upgraded><strong>Create an account in HERE XYZ Studio</strong></h2>
+<p>To create an account, please visit our site:</p>
+<p><a href="https://xyz.here.com/studio/" target="_blank"><paper-button class="colored" raised>HERE XYZ Studio</paper-button></a></p>
+<aside class="special"><p><strong>Note:</strong> If you already have an account on our website please login.</p>
+</aside>
+<h2 is-upgraded><strong>Install node.js</strong></h2>
+<aside class="special"><p><strong>Note:</strong> In this tutorial we are going to upload Shapefiles, which are larger files than GeoJSON or CSV. To do so, we need to use Data Hub CLI. </p>
+</aside>
+<p>Node.js is required to install HERE CLI. To use it, you should have npm installed. The best way is to go to <a href="https://nodejs.org/" target="_blank">nodejs.org</a> and install the appropriate package for your system. Download the package and install it normally.</p>
+<h2 is-upgraded><strong>Install HERE CLI</strong></h2>
+<p>Install the latest version of HERE CLI with following command:</p>
+<p><code>npm install -g @here/cli </code></p>
+<p>Type it in Node.js command prompt.</p>
+<h2 is-upgraded><strong>Configure HERE CLI</strong></h2>
+<p>HERE CLI needs to have access to your projects to help you work with your data. For that, you need to log in using your HERE developer account. You only need to do this once for a project.</p>
+<p><code>here configure account</code></p>
+<p>Type it in Node.js command prompt.</p>
+<p>When prompted, enter your email and password that you use in the HERE Developer portal.</p>
+<aside class="special"><p><strong>Note:</strong> For more details visit <a href="https://www.here.xyz/cli/" target="_blank">https://www.here.xyz/cli/</a></p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating new project" duration="0">
+        <h2 is-upgraded><strong>Create new project</strong></h2>
+<p>When you first sign in you won&#39;t see any projects, so to create  a new one, click <strong>Create new project </strong>button or click on the circle icon with + inside (which is located below <strong>Create new project</strong> button). </p>
+<p class="image-container"><img style="width: 624.00px" src="img\d8f02f5cef8e79c6.png"></p>
+<p>In the next  step you can give your map a name and also a description. </p>
+<p class="image-container"><img style="width: 351.00px" src="img\ce5a50a48993da41.png"></p>
+<p>In this step you can also pick a base map. Feel free to pick the one you like the most, there are a few available at the moment. We will go with the one from the base maps provided by HERE. Please, keep <strong>Show labels</strong> ticked.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\53c481845a3273af.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Adding data to the project" duration="0">
+        <p><a href="https://github.com/indykk90/xyz-test.git" target="_blank"><paper-button class="colored" raised><iron-icon icon="file-download"></iron-icon>Download required shapefiles</paper-button></a></p>
+<p>There are two ways of adding spatial data to the project:</p>
+<ul>
+<li>Directly by HERE XYZ Studio</li>
+<li>Using Data Hub CLI</li>
+</ul>
+<p>We are going to play with Shapefiles, so for this reason, Data Hub CLI is required. </p>
+<h2 is-upgraded><strong>Adding data by using Data Hub CLI</strong></h2>
+<aside class="special"><p><strong>Note:</strong> For more information about Data Hub CLI, visit: <a href="https://developer.here.com/tutorials/using-the-xyz-cli/" target="_blank">https://developer.here.com/tutorials/using-the-xyz-cli/</a></p>
+</aside>
+<p>To add larger data to the HERE XYZ Studio, we need to use Data Hub CLI. First of all, open Node.js Command Prompt. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\556a55372853e8f0.png"></p>
+<aside class="special"><p><strong>Note:</strong> This step was mentioned previously, if you already provided your HERE credentials, skip this step and jump to the next one - uploading shapefiles.</p>
+</aside>
+<p>In the beginning, please provide HERE credentials. Enter your email credentials by typing:</p>
+<p><code>here configure account</code></p>
+<p>You will be prompted to enter your email address and password. Your email will be echoed, but there will be no feedback when you paste in your password. </p>
+<p>Next step is to upload our first Shapefile (CEU_countries.shp), type:</p>
+<p><code>here xyz upload -f CEU_countries.shp</code></p>
+<p>You will be asked to provide title and description for the new space.</p>
+<p class="image-container"><img style="width: 533.00px" src="img\84fd88b8ccdec6a0.png"></p>
+<p>After this, your shapefile will be uploaded.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\160354f816557a86.png"></p>
+<p>To upload another Shapefile (Places_to_visit.shp), follow the same rule.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="HERE WeGO - collections" duration="0">
+        <p>In this step, we are going to export collections from the Here WeGo. Create an account or use an existing one. </p>
+<h2 is-upgraded><strong>Adding new places</strong></h2>
+<p class="image-container"><img style="width: 421.50px" src="img\9b80ef6060a84d80.png"></p>
+<p>To add collections, just simply right click on the place you want to collect and select &#34;Collect this location&#34;. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\f210e1be0d8e1248.png"></p>
+<p>New window will appear. You can add a new place to the collection you&#39;ve already created or to the new one.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\3f66a75626670a1f.png"></p>
+<p>The view of added collections:</p>
+<p class="image-container"><img style="width: 624.00px" src="img\dd05e7de1744477f.png"></p>
+<p>Add at least 10 places you visited in Central Europe.</p>
+<h2 is-upgraded><strong>Exporting collections to JSON</strong></h2>
+<p>To export your collections, click the link provided below. Right click on a page and save it as &#34;my_collections.json&#34;</p>
+<aside class="special"><p><strong>Note: </strong><a href="https://wego.here.com/api/collections/favoritePlace" target="_blank">https://wego.here.com/api/collections/favoritePlace</a></p>
+</aside>
+<p>Now you need to convert JSON to CSV. To do this, visit the link provided below. It will show you your data in tabular format. Save it as ‘my_collections.csv&#39;.</p>
+<aside class="special"><p><strong>Note: </strong><a href="https://json-csv.com/" target="_blank">https://json-csv.com/</a></p>
+</aside>
+<h2 is-upgraded><strong>Uploading CSV to HERE XYZ Studio using Data Hub CLI</strong></h2>
+<p>To upload csv file to the Data Hub CLI, type in command prompt:</p>
+<p><code>here xyz upload -f my_collections.csv</code></p>
+<p class="image-container"><img style="width: 624.00px" src="img\cfb942836228f52f.png"></p>
+<p>You will be asked to provide property for Latitude and Longitude in your csv file. Just select relevant columns. After this, your csv file will be added to your XYZ Space. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\a516109fb6c9afa6.png"></p>
+<p>Now you can go to the <strong>Data </strong>section in XYZ Studio to check properly uploaded data.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\127d21782c3a2d43.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Styling our project" duration="0">
+        <h2 is-upgraded><strong>Let&#39;s style our layers</strong></h2>
+<p>Our project is ready for styling. First of all, we have to add all uploaded data to our map. To do so, please click the <strong>Data</strong> icon located below the description of your project. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\aadea6a250a94ba8.png"></p>
+<p>You will be redirected to the <strong>My Spaces</strong> section. Select all layers and add them by clicking <strong>Add 3 datasets</strong> button located in the bottom right corner.   </p>
+<p class="image-container"><img style="width: 624.00px" src="img\a42fc25945b79584.png"></p>
+<p>Our map with added layers:</p>
+<p class="image-container"><img style="width: 624.00px" src="img\97794b0f778ac2ad.png"></p>
+<p>In this step you can change colors, symbols, outline color and thickness as you wish. You can also display labels of each layer. </p>
+<p>Let&#39;s color our countries by using green color with transparency. So then we can see our background map. Moreover, let&#39;s display each country&#39;s name. </p>
+<aside class="warning"><p><strong>Attention:</strong> While displaying labels, select Text property!</p>
+</aside>
+<p class="image-container"><img style="width: 341.00px" src="img\68afd91a2dbd3af9.png"><img style="width: 290.00px" src="img\6fe519c6b5ffd91a.png"></p>
+<p>We can also group countries by attribute and mark them by using the same color. For example, let&#39;s color Baltics (Lithuania, Latvia and Estonia) using one color. To do this, we need to add a <strong>new style group</strong>. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\1e33ed715193c37e.png"></p>
+<aside class="special"><p><strong>Note:</strong> Our attribute table was already prepared, records relevant to Baltics were updated by value ‘Yes&#39;. Try to create different types of data, according to your needs. </p>
+</aside>
+<p>Result:</p>
+<p class="image-container"><img style="width: 612.00px" src="img\6685882950074bd6.png"></p>
+<p>In addition, let&#39;s color our collections (places we&#39;ve already visited) by using an icon of camera inside a blue square box. </p>
+<p class="image-container"><img style="width: 315.00px" src="img\bf589487a312b558.png"></p>
+<p>By clicking on the icon of each place, the pop-up with information displays. You can manage what you want to see on a pop-up by selecting them from the list. Try this by clicking the drop down menu <strong>Cards</strong>.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\6c987bf881230568.png"> </p>
+<h2 is-upgraded><strong>Updating the map</strong></h2>
+<p>Now it&#39;s time to select and display places we would love to visit in the future. It&#39;s the last missing element of our map. </p>
+<p>In this step, we will update our map of the new layer - places we want to visit in the future. This layer has been already added to our map (Places to visit). Now it&#39;s time to add some places on a map.</p>
+<p>To do this, click on the <strong>Places to visit</strong> layer and toggle edit mode (<strong>icon of pen</strong>), which is located in the top left corner of your screen.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\5b82d790cc788e4d.png"></p>
+<p>To add a new point, click a <strong>plus button</strong> and select point. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\5299751ff1440931.png"></p>
+<p>Click on a map (on a place you want to visit) and save your edit. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\946dda62ffbef490.png"></p>
+<p>When your place is drawn, go to your <strong>Data Space</strong> and click on the layer we are editing (Places I want to visit). Open attribute table and update columns. Provide information about the type of place and year when you would like to visit this spot. </p>
+<p class="image-container"><img style="width: 624.00px" src="img\689ff4a6045b51d7.png"></p>
+<p>Depending on the attributes, we can create a new style group which takes into account date and type of place. </p>
+<aside class="special"><p><strong>Note:</strong> Add more places, at least 10, before the next step.</p>
+</aside>
+<p>On the map you can see a few places added in Poland and Slovakia (Tatra mountains region). Let&#39;s say we want to visit Poland in 2020 and Slovakia in 2021. Moreover, we want to split our places not only by year and country, but also by type of place. </p>
+<p>Let&#39;s create a map showing all our rules.  </p>
+<p class="image-container"><img style="width: 624.00px" src="img\62b0c6fbf015e09f.png"></p>
+<p>Here is a rule to show only outdoor places (lakes, mountains etc.) we want to visit in Poland in 2020. Try your own rules according to the places you&#39;ve added to the map. </p>
+<p>Below you&#39;ll find a map with following rules:</p>
+<ul>
+<li>Poland 2020 - nature (lakes, mountains etc.)</li>
+<li>Poland 2020 - restaurants</li>
+<li>Slovakia 2021 - nature (lakes, mountains etc.)</li>
+<li>Slovakia 2021 - restaurants</li>
+<li>Slovakia 2021 - café (because there&#39;s one lovely café we want to visit next year :-) ) </li>
+</ul>
+<p class="image-container"><img style="width: 624.00px" src="img\a691ae28314dca2c.png"></p>
+<p>Feel free to add more places and more style groups to your map!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Publishing" duration="0">
+        <p>Now it&#39;s time to publish our map. You can easily share a link to your map or copy &amp; paste a snippet of code that you can directly include on a web page or in a blog for example.</p>
+<p>By default, every map you create with HERE XYZ Studio is private and visible only to you until you decide to publish it.</p>
+<p>All you have to do to publish the map is to turn publishing on (you can turn it off anytime again as well if you wish). This button is located in the bottom left corner of your screen.</p>
+<p class="image-container"><img style="width: 347.00px" src="img\ebe18b66548e800f.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img\8c0b9c7d066048c.png"></p>
+<p>When the map is published, you also see the URL where it can be reached. You can copy this and share it with people directly or you can link to it from somewhere like a blog or wiki page.</p>
+<p>You can also copy the EMBED code and use it directly in the code of your website or blog. It&#39;s a bit of HTML that will show your map directly on the page.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\b894d1f48a09c8cd.png"></p>
+<p>Share your map with the world! :-)</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Congratulations" duration="0">
+        <p>Congratulations, you&#39;ve successfully built your first map using HERE XYZ Studio! </p>
+<p class="image-container"><img style="width: 624.00px" src="img\d0a2f1b066aa6959.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img\383168b2fba85328.png"></p>
+<p>Our project was just a simple example of what you can do using HERE XYZ Studio. We encourage you to dig into HERE XYZ Studio deeper and to publish more projects in the future. Make HERE XYZ Studio your favourite tool! </p>
+<aside class="special"><p><strong>For more details visit: </strong></p>
+<ul>
+<li><a href="https://www.here.xyz/studio/" target="_blank">https://www.here.xyz/studio/</a></li>
+<li><a href="https://developer.here.com/products/xyz" target="_blank">https://developer.here.com/products/xyz</a></li>
+<li><a href="https://www.here.com/" target="_blank">https://www.here.com/</a></li>
+</ul>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>
